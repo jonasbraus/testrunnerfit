@@ -8,15 +8,15 @@ import '../providers/LoginProvider.dart';
 class PageAccount extends StatelessWidget {
   const PageAccount({super.key});
 
-  void login(LoginProvider loginProv, String email, String password, BuildContext context) async {
+  void login(LoginProvider loginProv, String email, String password,
+      BuildContext context) async {
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-          email: email, password: password);
+          .signInWithEmailAndPassword(email: email, password: password);
       loginProv.login(FirebaseAuth.instance.currentUser!);
     } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Wrong Email or Password!")));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Wrong Email or Password!")));
     }
   }
 
@@ -51,9 +51,8 @@ class PageAccount extends StatelessWidget {
                         ),
                       ),
                       onChanged: (value) => email = value,
-                      onSubmitted: (value) => {
-                        login(loginProv, email, password, context)
-                      },
+                      onSubmitted: (value) =>
+                          {login(loginProv, email, password, context)},
                     ),
                     SizedBox(
                       height: 10,
@@ -65,14 +64,13 @@ class PageAccount extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      onSubmitted: (value) => {
-                        login(loginProv, email, password, context)
-                      },
+                      onSubmitted: (value) =>
+                          {login(loginProv, email, password, context)},
                       obscureText: true,
                       onChanged: (value) => password = value,
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     FilledButton.icon(
                       onPressed: () {
@@ -80,6 +78,60 @@ class PageAccount extends StatelessWidget {
                       },
                       label: Text("Login"),
                       icon: Icon(Icons.person),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextButton(
+                      onPressed: () => {
+                        if (email.isEmpty)
+                          {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("Please Enter Valid Email!")))
+                          }
+                        else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              contentPadding: EdgeInsets.only(top: 18, left: 18),
+                              actionsPadding: EdgeInsets.all(10),
+                              actionsAlignment: MainAxisAlignment.spaceBetween,
+                              insetPadding: EdgeInsets.all(0),
+                              content: Text(
+                                LanguageProvider.getMap()["general"]["sure"],
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              actions: [
+                                TextButton.icon(
+                                  onPressed: () async => {
+                                    await FirebaseAuth.instance.sendPasswordResetEmail(email: email),
+                                    Navigator.of(context).pop(),
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text("Password Reset Link Sent To: $email")))
+                                  },
+                                  label: Text(
+                                    "Reset",
+                                    style: TextStyle(
+                                        color:
+                                        Theme.of(context).colorScheme.onSurface),
+                                  ),
+                                  icon: Icon(
+                                    Icons.password_rounded,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () => {Navigator.of(context).pop()},
+                                  label: Text(
+                                      LanguageProvider.getMap()["general"]["cancel"]),
+                                  icon: Icon(Icons.arrow_back),
+                                )
+                              ],
+                            ),
+                          ),
+                        }
+                      },
+                      child: Text("Forgot Password?"),
                     )
                   ],
                 ),
@@ -92,7 +144,10 @@ class PageAccount extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(LoginProvider.user!.email!, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                Text(
+                  LoginProvider.user!.email!,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
                 FilledButton.icon(
                   onPressed: () async {
                     showDialog(
