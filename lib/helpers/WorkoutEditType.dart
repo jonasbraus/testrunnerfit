@@ -1,0 +1,4 @@
+enum WorkoutEditType {
+  create,
+  delete
+}

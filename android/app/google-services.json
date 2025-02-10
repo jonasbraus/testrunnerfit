@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "174568523442",
+    "project_id": "fitflut-ac7f1",
+    "storage_bucket": "fitflut-ac7f1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174568523442:android:53ddfda9afda478848ebab",
+        "android_client_info": {
+          "package_name": "com.brausjonas.fitflut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174568523442-qcp7bq3f9atqk8af65imqtl0prjbc8b6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv_lgGNy2AJREqv_r2IcQ6kfoO-FTepyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174568523442-qcp7bq3f9atqk8af65imqtl0prjbc8b6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "174568523442-061en4vt9lmdiafvroqudlj4uekqu68a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.brausjonas.fitflut"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
