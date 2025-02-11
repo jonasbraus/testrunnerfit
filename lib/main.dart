@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +30,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  if (Platform.isAndroid) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  }
 
   LoginProvider.user = FirebaseAuth.instance.currentUser;
 
@@ -135,7 +139,7 @@ class MyHome extends StatelessWidget {
                       : BorderRadius.only(
                           topLeft: Radius.circular(15),
                           topRight: Radius.circular(15))),
-          padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 30),
+          padding: Platform.isIOS ? EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 30) : EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 25),
           child: GNav(
             tabs: [
               GButton(

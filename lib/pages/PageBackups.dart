@@ -42,17 +42,17 @@ class _PageBackupsState extends State<PageBackups> {
     for (String key in snapshot.data!.keys) {
       children.add(
         Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondary.withAlpha(20),
               borderRadius: BorderRadius.circular(15)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            spacing: 20,
+            spacing: 10,
             children: [
               Text(
-                key,
-                style: TextStyle(fontSize: 20),
+                "${key.split(".")[0].split(":")[0].replaceAll("-", ".")}:${key.split(".")[0].split(":")[1]}",
+                style: TextStyle(fontSize: 18),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,7 +166,7 @@ class _PageBackupsState extends State<PageBackups> {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                spacing: 20,
+                spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: children,
               ),

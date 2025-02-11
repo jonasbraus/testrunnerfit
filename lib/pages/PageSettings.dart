@@ -156,12 +156,55 @@ class PageSettings extends StatelessWidget {
                       SizedBox(height: 10),
                       FilledButton.icon(
                         onPressed: () async {
-                          Map<String, Object?> dbContent =
-                              await DatabaseHelper.getDBContents();
-                          String now = await FirebaseHelper.storeBackup(
-                              LoginProvider.user!.uid, dbContent);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Backup $now Created!")));
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              contentPadding:
+                                  EdgeInsets.only(top: 18, left: 18),
+                              actionsPadding: EdgeInsets.all(10),
+                              actionsAlignment: MainAxisAlignment.spaceBetween,
+                              insetPadding: EdgeInsets.all(0),
+                              content: Text(
+                                LanguageProvider.getMap()["general"]["sure"],
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              actions: [
+                                TextButton.icon(
+                                  onPressed: () async {
+                                    Map<String, Object?> dbContent =
+                                        await DatabaseHelper.getDBContents();
+                                    String now =
+                                        await FirebaseHelper.storeBackup(
+                                            LoginProvider.user!.uid, dbContent);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content:
+                                                Text("Backup $now Created!")));
+                                    Navigator.of(context).pop();
+                                  },
+                                  label: Text(
+                                    "Create Backup",
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface),
+                                  ),
+                                  icon: Icon(
+                                    Icons.backup_outlined,
+                                    color:
+                                        Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                ),
+                                TextButton.icon(
+                                  onPressed: () => {Navigator.pop(context)},
+                                  label: Text(
+                                      LanguageProvider.getMap()["general"]
+                                          ["cancel"]),
+                                  icon: Icon(Icons.arrow_back),
+                                )
+                              ],
+                            ),
+                          );
                         },
                         label: Text("Create Backup"),
                         icon: Icon(Icons.backup),
@@ -175,7 +218,10 @@ class PageSettings extends StatelessWidget {
                           } catch (e) {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => SingleChildScrollView(
-                                child: Text(e.toString(), style: TextStyle(fontSize: 18),),
+                                child: Text(
+                                  e.toString(),
+                                  style: TextStyle(fontSize: 18),
+                                ),
                               ),
                             ));
                           }
